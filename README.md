@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Patchybean Frontend
 
-## Getting Started
+A tiny [Next.js](https://nextjs.org) site that renders Patchy Bean's greeting. The project now exports a fully static bundle so it can be hosted from GitHub Pages without any server side runtime.
 
-First, run the development server:
+## Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Install dependencies with `npm install` (or your preferred package manager).
+2. Start the local dev server with `npm run dev` and visit <http://localhost:3000>.
+3. Run `npm run lint` to keep the codebase clean.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`npm run build` produces the static site in `out/`, matching what gets published to Pages.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Continuous Deployment to GitHub Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Workflow: `.github/workflows/deploy.yml` builds the site on pushes to `master` (and on manual dispatch).
+- Pipeline steps: checkout ➜ install ➜ lint ➜ `next build` ➜ upload the `out/` directory ➜ deploy via `actions/deploy-pages`.
+- Permissions and concurrency are already configured to satisfy the GitHub Pages requirements.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+After the first successful run, ensure **Settings → Pages → Build and deployment** is set to **GitHub Actions**. Each subsequent push to `master` will refresh <https://patchybean.github.io/patchybean-frontend/> automatically. You can also trigger redeploys from the **Actions** tab via the manual workflow dispatch.
